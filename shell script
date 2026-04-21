@@ -1,0 +1,32 @@
+#!/bin/bash
+ 
+RESOURCE_GROUP="<your-resource-group>"
+VM_NAME="devops-vm"
+IMAGE="Ubuntu2204"
+SIZE="Standard_B2s"
+ADMIN_USER="azureuser"
+STORAGE_SKU="Standard_LRS"
+DISK_SIZE=30
+ 
+echo "Creating Azure VM: $VM_NAME ..."
+ 
+az vm create \
+  --resource-group $RESOURCE_GROUP \
+  --name $VM_NAME \
+  --image $IMAGE \
+  --size $SIZE \
+  --admin-username $ADMIN_USER \
+  --generate-ssh-keys \
+  --storage-sku $STORAGE_SKU \
+  --os-disk-size-gb $DISK_SIZE
+ 
+echo "Verifying VM state..."
+az vm show \
+  --resource-group $RESOURCE_GROUP \
+  --name $VM_NAME \
+  --show-details \
+  --query powerState \
+  --output tsv
+```
+ 
+---
